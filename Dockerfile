@@ -7,7 +7,8 @@ ADD ./supervisord.conf /etc/supervisord.conf
 #ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
 #RUN tar xvzf /wordpress.tar.gz 
 #RUN mv /wordpress/* /var/www/html/.
-RUN chown -R apache:apache /var/www/
+#RUN chown -R apache:apache /var/www/
+
 RUN chmod 755 /start.sh
 RUN chmod 755 /etc/apache2/foreground.sh
 EXPOSE 80
