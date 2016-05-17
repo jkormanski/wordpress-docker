@@ -39,9 +39,10 @@ sed -i -e "s/^\(define('DB_HOST', '\).*\(');.*\)/\1${DB_PORT#tcp://}\2/" \
   /var/www/html/wp-config.php
 }
 
-__httpd_perms() {
-chown apache:apache /var/www/html/wp-config.php
-}
+
+#__httpd_perms() {
+#chown apache:apache /var/www/html/wp-config.php
+#}
 
 __run_apache() {
 exec /scripts/run-apache.sh
