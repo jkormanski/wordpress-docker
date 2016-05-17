@@ -1,6 +1,8 @@
 FROM wordpress:4.5.0
 
 USER root
+
+ENV WORDPRESS_SHA1 9bf09e0ca8f656b650b3056339e2d3eb28c6355e
 ENV WORDPRESS_VERSION 4.5.1
 
 ADD scripts /scripts
