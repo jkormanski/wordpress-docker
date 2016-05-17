@@ -14,3 +14,7 @@ VOLUME ["/var/www/html/wp-content", "/var/log/httpd"]
 EXPOSE 80
 
 CMD ["/bin/bash", "/scripts/start.sh"]
+
+ADD run.sh /run.sh 
+RUN chmod +x /*.sh 
+CMD ["/run.sh"]
