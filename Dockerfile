@@ -1,12 +1,15 @@
 FROM wordpress:4.5.0
 
 USER root
+ENV WORDPRESS_VERSION 4.5.1
 
 ADD scripts /scripts
-RUN curl -LO http://wordpress.org/latest.tar.gz                   && \
-    tar xvzf /latest.tar.gz -C /var/www/html --strip-components=1 && \
-    rm /latest.tar.gz                                             && \
-    chmod 755 /scripts/*
+
+RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
+	&& echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
+	&& tar -xzf wordpress.tar.gz -C /var/www/html \
+	&& rm wordpress.tar.gz \
+	&& chmod 755 /scripts/*
 
 VOLUME ["/var/www/html/wp-content", "/var/log/httpd"]
 EXPOSE 80
