@@ -1,6 +1,6 @@
 FROM wordpress:4.5.0
 
-USER 1001
+USER root
 
 COPY docker-entrypoint.sh /entrypoint.sh 
 ENTRYPOINT ["/entrypoint.sh"] 
