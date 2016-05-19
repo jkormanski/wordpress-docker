@@ -11,7 +11,7 @@ RUN echo %sudo	ALL=NOPASSWD: ALL >> /etc/sudoers
 ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
 RUN tar xvzf /wordpress.tar.gz 
 RUN mv /wordpress/* /var/www/html/.
-RUN adduser $USER apache 
+#RUN adduser $USER apache 
 RUN chown -R $USER:apache /var/www 
 RUN chmod u=rwX,g=srX,o=rX -R /var/www 
 RUN chmod 755 /start.sh
