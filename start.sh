@@ -39,9 +39,9 @@ s/password_here/$WORDPRESS_PASSWORD/
 }
 
 __httpd_perms() {
-adduser user apache
+#adduser user apache
 chown -R user:apache /var/www  
-chmod u=rwX,g=srX,o=rX -R /var/www
+#chmod u=rwX,g=srX,o=rX -R /var/www
 }
 
 __start_mysql() {
