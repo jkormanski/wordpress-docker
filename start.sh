@@ -6,6 +6,7 @@ yum -y erase community-mysql community-mysql-server
 rm -rf /var/lib/mysql/ /etc/my.cnf
 yum -y install community-mysql community-mysql-server
 mysql_install_db
+adduser user mysql
 chown -R user:mysql /var/lib/mysql
 /usr/bin/mysqld_safe & 
 sleep 10
@@ -38,7 +39,9 @@ s/password_here/$WORDPRESS_PASSWORD/
 }
 
 __httpd_perms() {
-chown user:apache /var/www/html/wp-config.php
+adduser user apache
+chown user:apache /var/www/html/wp-config.php  
+chmod u=rwX,g=srX,o=rX -R /var/www
 }
 
 __start_mysql() {
