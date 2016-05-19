@@ -40,7 +40,7 @@ s/password_here/$WORDPRESS_PASSWORD/
 
 __httpd_perms() {
 adduser user apache
-chown user:apache /var/www/html/wp-config.php  
+chown -R user:apache /var/www  
 chmod u=rwX,g=srX,o=rX -R /var/www
 }
 
