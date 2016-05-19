@@ -6,8 +6,8 @@ yum -y erase community-mysql community-mysql-server
 rm -rf /var/lib/mysql/ /etc/my.cnf
 yum -y install community-mysql community-mysql-server
 mysql_install_db
-adduser user mysql
-chown -R user:mysql /var/lib/mysql
+adduser root mysql
+chown -R root:mysql /var/lib/mysql
 /usr/bin/mysqld_safe & 
 sleep 10
 }
