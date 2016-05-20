@@ -25,12 +25,21 @@ VOLUME /var/www/html
 ENV WORDPRESS_VERSION 4.5.2
 ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 
+ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
+RUN tar xvzf /wordpress.tar.gz 
+RUN mv /wordpress/* /wordpress/.
+RUN chown -R $USER:apache /wordpress
+
+EXPOSE 80
+EXPOSE 22
+
+
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
-RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
-	&& echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
-	&& tar -xzf wordpress.tar.gz -C /usr/src/ \
-	&& rm wordpress.tar.gz \
-	&& chown -R $USER:www-data /usr/src/wordpress
+#RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
+#	&& echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
+#	&& tar -xzf wordpress.tar.gz -C /usr/src/ \
+#	&& rm wordpress.tar.gz \
+#	&& chown -R $USER:www-data /usr/src/wordpress
 
 ADD ./docker-entrypoint.sh /entrypoint.sh
 #COPY docker-entrypoint.sh /entrypoint.sh
