@@ -8,6 +8,10 @@ fi
 
 __create_user() {
 # Create a user to SSH into as.
+rm /etc/passwd.lock
+rm /etc/shadow.lock
+rm /etc/group.lock
+rm /etc/gshadow.lock
 SSH_USERPASS=`pwgen -c -n -1 8`
 useradd -G wheel user
 echo user:$SSH_USERPASS | chpasswd
