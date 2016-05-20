@@ -1,12 +1,25 @@
 #!/bin/bash
 
+__check() {
+if [ -f /var/www/html/wp-config.php ]; then
+  exit
+fi
+}
+
+__create_user() {
+# Create a user to SSH into as.
+SSH_USERPASS=`pwgen -c -n -1 8`
+useradd -G wheel user
+echo user:$SSH_USERPASS | chpasswd
+echo ssh user password: $SSH_USERPASS
+}
+
 __mysql_config() {
 # Hack to get MySQL up and running... I need to look into it more.
-yum -y erase community-mysql community-mysql-server
+dnf -y erase community-mysql community-mysql-server
 rm -rf /var/lib/mysql/ /etc/my.cnf
-yum -y install community-mysql community-mysql-server
+dnf -y install community-mysql community-mysql-server
 mysql_install_db
-adduser root mysql
 chown -R root:mysql /var/lib/mysql
 /usr/bin/mysqld_safe & 
 sleep 10
@@ -39,9 +52,7 @@ s/password_here/$WORDPRESS_PASSWORD/
 }
 
 __httpd_perms() {
-#adduser user apache
-chown -R root:apache /var/www/html/wp-config.php 
-#chmod u=rwX,g=srX,o=rX -R /var/www
+chown root:apache /var/www/html/wp-config.php
 }
 
 __start_mysql() {
@@ -53,19 +64,15 @@ sleep 10
 }
 
 __run_supervisor() {
-#rm -f /run/httpd/httpd.pid
 supervisord -n
-}
-
-__check() {
-if [ ! -f /var/www/html/wp-config.php ]; then
-  __mysql_config
-  __handle_passwords
-  __httpd_perms
-  __start_mysql
-fi
 }
 
 # Call all functions
 __check
+__create_user
+__mysql_config
+__handle_passwords
+__httpd_perms
+__start_mysql
 __run_supervisor
+
