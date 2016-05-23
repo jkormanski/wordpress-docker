@@ -27,9 +27,15 @@ ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 
 RUN mkdir /wordpress/
 
-ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
-RUN tar -xzf wordpress.tar.gz -C /wordpress/
-RUN chown -R $USER:www-data /wordpress
+RUN curl -LO http://wordpress.org/latest.tar.gz                   && \
+    tar xvzf /latest.tar.gz -C /wordpress --strip-components=1 && \
+    rm /latest.tar.gz                                             && \
+    chown -R $USER:www-data /wordpress                              && \
+
+
+#ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
+#RUN tar -xzf wordpress.tar.gz -C /wordpress/
+#RUN chown -R $USER:www-data /wordpress
 
 EXPOSE 80
 EXPOSE 22
