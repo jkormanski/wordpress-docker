@@ -27,7 +27,7 @@ ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 
 ADD http://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz /wordpress.tar.gz
 RUN tar xvzf /wordpress.tar.gz
-RUN mv /wordpress/* /wordpress/.
+#RUN mv /wordpress/* /wordpress/.
 RUN chown -R $USER:www-data /wordpress
 
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
