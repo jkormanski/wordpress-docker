@@ -1,4 +1,5 @@
-FROM php:5.6-apache
+FROM wordpress:4.5.0
+#FROM php:5.6-apache
 
 USER root
 
@@ -20,7 +21,8 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-VOLUME /wordpress
+VOLUME /var/www/html
+#ENV HOME /var/www/html
 
 ENV WORDPRESS_VERSION 4.5.2
 ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
