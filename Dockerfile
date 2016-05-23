@@ -41,7 +41,7 @@ EXPOSE 22
 
 ADD ./docker-entrypoint.sh /entrypoint.sh
 #COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # grr, ENTRYPOINT resets CMD now
 #CMD ["/bin/bash", "/entrypoint.sh"]
