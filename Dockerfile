@@ -25,6 +25,8 @@ RUN { \
 ENV WORDPRESS_VERSION 4.5.2
 ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 
+mkdir /wordpress/
+
 ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
 RUN tar -xzf wordpress.tar.gz -C /wordpress/
 RUN chown -R $USER:www-data /wordpress
