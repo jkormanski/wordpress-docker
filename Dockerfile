@@ -46,7 +46,7 @@ ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
 RUN tar xvzf /wordpress.tar.gz
 #RUN tar -xzf wordpress.tar.gz -C /var/www/html
-RUN mv /wordpress/* /var/www/html/.
+#RUN mv /wordpress/* /var/www/html/.
 RUN chown -R $USER:www-data /var/www/html/wordpress
 
 EXPOSE 80
