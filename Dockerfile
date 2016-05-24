@@ -21,7 +21,7 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-VOLUME /wordpress
+VOLUME /var/www/html
 #ENV HOME /var/www/html
 
 ENV WORDPRESS_VERSION 4.5.2
