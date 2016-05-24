@@ -42,9 +42,11 @@ ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 #VOLUME ["/var/www/html/wp-content", "/var/log/httpd"]
 
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
-RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz
-RUN tar -xzf wordpress.tar.gz -C /var/www/html
-RUN rm wordpress.tar.gz
+#RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz
+ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
+RUN tar xvzf /wordpress.tar.gz
+#RUN tar -xzf wordpress.tar.gz -C /var/www/html
+RUN mv /wordpress/* /var/www/html/.
 RUN chown -R $USER:www-data /var/www/html/wordpress
 
 EXPOSE 80
