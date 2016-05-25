@@ -3,8 +3,8 @@ FROM wordpress:4.5.0
 
 USER root
 
-ENV HOME /usr/src/
-VOLUME /usr/src/wp-content
+#ENV HOME /usr/src/
+#VOLUME /usr/src/wp-content
 
 RUN a2enmod rewrite expires
 
@@ -27,21 +27,30 @@ RUN { \
 ENV WORDPRESS_VERSION 4.5.2
 ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 
+VOLUME /var/www/html
+
 #ADD http://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz /wordpress.tar.gz
 #RUN tar -xzf /wordpress.tar.gz --strip-components=1 -C /opt/app-root/wordpress 
 #RUN tar xzvf /wordpress.tar.gz 
 
-RUN cd /tmp && curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
-    && mkdir -p /usr/src/wordpress \
-    && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
-    && tar -xzf wordpress.tar.gz --strip-components=1 -C /usr/src/wordpress \
-    && rm wordpress.tar.gz \
- && chmod -R 0777 /usr/src//wp-content
+RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
+	&& echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
+	&& tar -xzf wordpress.tar.gz -C /usr/src/ \
+	&& rm wordpress.tar.gz \
+	&& chown -R www-data:www-data /usr/src/wordpress
+
+
+#RUN cd /tmp && curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
+ #   && mkdir -p /usr/src/wordpress \
+ #   && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
+ #   && tar -xzf wordpress.tar.gz --strip-components=1 -C /usr/src/wordpress \
+ #   && rm wordpress.tar.gz \
+ #&& chmod -R 0777 /usr/src//wp-content
 
 
 
 #RUN mv /usr/src/wordpress/* /var/www/html/
-RUN chown -R $USER:www-data /usr/src/
+RUN chown -R $USER:www-data /var/www/html/
 
 EXPOSE 80
 EXPOSE 22
