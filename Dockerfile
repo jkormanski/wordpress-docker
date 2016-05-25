@@ -4,7 +4,7 @@ FROM wordpress:4.5.0
 USER root
 
 ENV HOME /var/www/html
-VOLUME /var/www/html
+VOLUME /var/www/html/wp-content
 
 RUN a2enmod rewrite expires
 
@@ -27,10 +27,19 @@ RUN { \
 ENV WORDPRESS_VERSION 4.5.2
 ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 
-ADD http://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz /wordpress.tar.gz
-#RUN tar -xzf wordpress.tar.gz --strip-components=1
-RUN tar -xzf /wordpress.tar.gz --strip-components=1 -C /opt/app-root/wordpress 
+#ADD http://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz /wordpress.tar.gz
+#RUN tar -xzf /wordpress.tar.gz --strip-components=1 -C /opt/app-root/wordpress 
 #RUN tar xzvf /wordpress.tar.gz 
+
+RUN cd /tmp && curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
+    && mkdir -p /var/www/html/wordpress \
+    && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
+    && tar -xzf wordpress.tar.gz --strip-components=1 -C /var/www/html/wordpress \
+    && rm wordpress.tar.gz \
+  && fix-permissions /var/www/html/wordpress \
+    && fix-permissions /var/www/html/wp-content && chmod -R 0777 /var/www/html/wp-content
+
+
 
 #RUN mv /usr/src/wordpress/* /var/www/html/
 RUN chown -R $USER:www-data /var/www/html
