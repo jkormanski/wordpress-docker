@@ -36,8 +36,7 @@ RUN cd /tmp && curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WO
     && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
     && tar -xzf wordpress.tar.gz --strip-components=1 -C /var/www/html/wordpress \
     && rm wordpress.tar.gz \
-  && fix-permissions /var/www/html/wordpress \
-    && fix-permissions /var/www/html/wp-content && chmod -R 0777 /var/www/html/wp-content
+ && chmod -R 0777 /var/www/html/wp-content
 
 
 
