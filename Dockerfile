@@ -3,8 +3,8 @@ FROM wordpress:4.5.0
 
 USER root
 
-ENV HOME /var/www/html
-VOLUME /var/www/html/wp-content
+ENV HOME /usr/src/
+VOLUME /usr/src/wp-content
 
 RUN a2enmod rewrite expires
 
@@ -32,16 +32,16 @@ ENV WORDPRESS_SHA1 bab94003a5d2285f6ae76407e7b1bbb75382c36e
 #RUN tar xzvf /wordpress.tar.gz 
 
 RUN cd /tmp && curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz \
-    && mkdir -p /var/www/html/wordpress \
+    && mkdir -p /usr/src/wordpress \
     && echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c - \
-    && tar -xzf wordpress.tar.gz --strip-components=1 -C /var/www/html/wordpress \
+    && tar -xzf wordpress.tar.gz --strip-components=1 -C /usr/src/wordpress \
     && rm wordpress.tar.gz \
- && chmod -R 0777 /var/www/html/wp-content
+ && chmod -R 0777 /usr/src//wp-content
 
 
 
 #RUN mv /usr/src/wordpress/* /var/www/html/
-RUN chown -R $USER:www-data /var/www/html
+RUN chown -R $USER:www-data /usr/src/
 
 EXPOSE 80
 EXPOSE 22
